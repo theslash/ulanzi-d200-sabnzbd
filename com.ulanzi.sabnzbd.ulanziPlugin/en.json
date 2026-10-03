@@ -1,0 +1,26 @@
+{
+  "Name": "SABnzbd",
+  "Description": "Shows SABnzbd download status on your Ulanzi D200.",
+  "Actions": [
+    {
+      "Name": "Download Status",
+      "Tooltip": "Live SABnzbd queue status"
+    }
+  ],
+  "Localization": {
+    "Connection": "Connection",
+    "Host URL": "Host URL",
+    "API Key": "API Key",
+    "Display": "Display",
+    "Poll Interval": "Poll Interval",
+    "seconds": "seconds",
+    "Show current job name": "Show current job name",
+    "Button Action": "Button Action",
+    "On Press": "On Press",
+    "Start or open UI": "Start or open UI",
+    "Pause / Resume": "Pause / Resume",
+    "Open SABnzbd UI": "Open SABnzbd UI",
+    "App Path": "App Path",
+    "Tip: API key is under SABnzbd → Config → General → Security.": "Tip: API key is under SABnzbd → Config → General → Security."
+  }
+}

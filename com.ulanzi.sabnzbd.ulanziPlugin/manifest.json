@@ -1,0 +1,47 @@
+{
+  "Author": "Rudi",
+  "Name": "SABnzbd",
+  "Description": "Shows SABnzbd download status on your Ulanzi D200.",
+  "Detail": "Polls the local SABnzbd API and displays speed, progress, queue size and pause state. Tap to pause/resume or open the web UI.",
+  "Icon": "assets/icons/pluginIcon.png",
+  "Category": "SABnzbd",
+  "CategoryIcon": "assets/icons/categoryIcon.png",
+  "Version": "1.0.0",
+  "UUID": "com.ulanzi.ulanzistudio.sabnzbd",
+  "Type": "JavaScript",
+  "CodePath": "dist/app.js",
+  "PrivateAPI": true,
+  "SupportedInMultiActions": false,
+  "Actions": [
+    {
+      "Name": "Download Status",
+      "Tooltip": "Live SABnzbd queue status",
+      "Icon": "assets/icons/actionIcon.png",
+      "UUID": "com.ulanzi.ulanzistudio.sabnzbd.status",
+      "PropertyInspectorPath": "property-inspector/status/inspector.html",
+      "Controllers": ["Keypad"],
+      "Devices": ["D200", "D200H", "D200X"],
+      "state": 0,
+      "States": [
+        {
+          "Name": "Status",
+          "Image": "assets/icons/status.png"
+        }
+      ],
+      "SupportedInMultiActions": false
+    }
+  ],
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.11"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Software": {
+    "MinVersion": "2.1.0"
+  }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover" />
+  <title>SABnzbd Status</title>
+  <link rel="stylesheet" href="../../libs/css/uspi.css">
+  <style>
+    .uspi-item-label { width: 120px; }
+    .hint {
+      opacity: 0.7;
+      font-size: 12px;
+      line-height: 1.35;
+      padding: 0 8px 8px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="udpi-wrapper hidden uspi-wrapper">
+    <form id="property-inspector">
+      <div class="uspi-heading" data-localize>Connection</div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>Host URL</div>
+        <input class="uspi-item-value" type="text" id="host" name="host"
+          value="http://127.0.0.1:8080" placeholder="http://127.0.0.1:8080">
+      </div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>API Key</div>
+        <input class="uspi-item-value" type="password" id="apikey" name="apikey"
+          value="" placeholder="SABnzbd API key" autocomplete="off">
+      </div>
+
+      <div class="uspi-heading" data-localize>Display</div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>Poll Interval</div>
+        <input class="uspi-item-value max10" type="number" min="1" max="60"
+          id="poll_seconds" name="poll_seconds" value="3">
+        <ud data-localize style="line-height: 26px;">seconds</ud>
+      </div>
+
+      <div class="uspi-item" type="checkbox">
+        <div class="uspi-item-value">
+          <div class="uspi-item-child">
+            <input id="show_job_name" type="checkbox" name="show_job_name" checked>
+            <label for="show_job_name" data-localize>Show current job name</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="uspi-heading" data-localize>Button Action</div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>On Press</div>
+        <select class="uspi-item-value select" id="click_action" name="click_action">
+          <option value="start_or_open" data-localize selected>Start or open UI</option>
+          <option value="toggle_pause" data-localize>Pause / Resume</option>
+          <option value="open_ui" data-localize>Open SABnzbd UI</option>
+        </select>
+      </div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>App Path</div>
+        <input class="uspi-item-value" type="text" id="app_path" name="app_path"
+          value="/Applications/SABnzbd.app" placeholder="/Applications/SABnzbd.app">
+      </div>
+
+      <p class="hint" data-localize>
+        Tip: API key is under SABnzbd → Config → General → Security.
+      </p>
+    </form>
+  </div>
+
+  <script src="../../libs/js/constants.js"></script>
+  <script src="../../libs/js/eventEmitter.js"></script>
+  <script src="../../libs/js/timers.js"></script>
+  <script src="../../libs/js/utils.js"></script>
+  <script src="../../libs/js/ulanziApi.js"></script>
+  <script src="./inspector.js"></script>
+</body>
+</html>
