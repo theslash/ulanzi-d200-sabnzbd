@@ -1,5 +1,8 @@
 import { execFile } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 import { promisify } from 'util';
+import { Utils } from './ulanzi-api/index.js';
 
 const execFileAsync = promisify(execFile);
 
@@ -11,6 +14,18 @@ const DEFAULTS = {
   app_path: '/Applications/SABnzbd.app',
   show_job_name: true,
 };
+
+function loadLocalConfig() {
+  try {
+    const pluginPath = Utils.getPluginPath();
+    const configPath = path.join(pluginPath, 'local-config.json');
+    if (!fs.existsSync(configPath)) return {};
+    const raw = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    return raw && typeof raw === 'object' ? raw : {};
+  } catch {
+    return {};
+  }
+}
 
 const COLORS = {
   idle: { bg: '#1B2433', fg: '#8BE58F', accent: '#52C45A' },
@@ -75,13 +90,23 @@ export default class SABnzbdStatus {
   }
 
   updateSettings(settings, type) {
+    const incoming = { ...(settings || {}) };
+    const previous = { ...(this.settings || {}) };
+    // Empty values should not wipe local-config / defaults.
+    for (const bag of [incoming, previous]) {
+      if (!String(bag.apikey || '').trim()) delete bag.apikey;
+      if (!String(bag.host || '').trim()) delete bag.host;
+    }
+
+    const local = loadLocalConfig();
     this.settings = {
       ...DEFAULTS,
-      ...this.settings,
-      ...settings,
+      ...local,
+      ...previous,
+      ...incoming,
     };
     this.settings.host = normalizeHost(this.settings.host);
-    this.settings.apikey = String(this.settings.apikey || '').trim();
+    this.settings.apikey = String(this.settings.apikey || local.apikey || '').trim();
     this.settings.poll_seconds = String(
       Math.max(1, Number(this.settings.poll_seconds) || Number(DEFAULTS.poll_seconds))
     );
@@ -236,8 +261,20 @@ export default class SABnzbdStatus {
 
     try {
       const resp = await fetch(url, { signal: controller.signal });
+      const text = await resp.text();
+      const trimmed = text.trim();
+
+      if (/api key required/i.test(trimmed)) throw new Error('API key missing');
+      if (/api key incorrect/i.test(trimmed)) throw new Error('API key invalid');
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const data = await resp.json();
+
+      let data;
+      try {
+        data = JSON.parse(trimmed);
+      } catch {
+        throw new Error(truncate(trimmed || `HTTP ${resp.status}`, 40));
+      }
+
       if (data?.error) throw new Error(data.error);
       if (data?.status === false && data?.error) throw new Error(data.error);
       return data;
@@ -260,16 +297,26 @@ export default class SABnzbdStatus {
   }
 
   renderError(message) {
-    const offline =
-      /fetch failed|ECONNREFUSED|Timeout|network|Failed to fetch|aborted/i.test(message || '') ||
-      !this.lastQueue;
+    const msg = String(message || '');
+    const missingKey = /api key missing/i.test(msg);
+    const badKey = /api key invalid|incorrect/i.test(msg);
+    const offline = /fetch failed|ECONNREFUSED|Timeout|network|Failed to fetch|aborted/i.test(msg);
+
+    let lines;
+    if (missingKey) {
+      lines = ['NO KEY', 'Set API key', 'in settings'];
+    } else if (badKey) {
+      lines = ['BAD KEY', 'Check API key', 'in settings'];
+    } else if (offline) {
+      lines = ['OFFLINE', 'Press to start', ''];
+    } else {
+      lines = ['ERROR', truncate(msg, 12), ''];
+    }
 
     this.setIcon(
       this.buildIcon({
-        theme: offline ? COLORS.connecting : COLORS.error,
-        lines: offline
-          ? ['OFFLINE', 'Press to start', '']
-          : ['ERROR', truncate(message, 12), ''],
+        theme: offline || missingKey || badKey ? COLORS.connecting : COLORS.error,
+        lines,
         progress: 0,
       })
     );
