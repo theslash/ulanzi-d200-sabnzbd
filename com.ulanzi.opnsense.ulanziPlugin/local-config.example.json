@@ -1,8 +1,0 @@
-{
-  "host": "https://opnsense.home.arpa",
-  "api_key": "example_opnsense_api_key_replace_me",
-  "api_secret": "example_opnsense_api_secret_replace_me",
-  "interface": "wan",
-  "poll_seconds": "60",
-  "insecure_tls": true
-}

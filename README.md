@@ -1,67 +1,44 @@
-# Ulanzi D200 Plugins
+# Ulanzi D200 – SABnzbd Status Plugin
 
-Plugins für das [Ulanzi D200](https://www.ulanzi.com/) Stream Deck.
+Shows live SABnzbd download status on an [Ulanzi D200](https://www.ulanzi.com/) key and can start SABnzbd or open its web UI.
 
-## Plugins
+## Features
 
-| Plugin | Ordner | Aktion |
-|--------|--------|--------|
-| SABnzbd Download-Status | `com.ulanzi.sabnzbd.ulanziPlugin` | Download Status |
-| OPNsense WAN Traffic | `com.ulanzi.opnsense.ulanziPlugin` | WAN Traffic |
+- Live queue status (speed, progress, job name, pause state)
+- Color-coded key display (idle / downloading / paused / offline)
+- **Press when offline:** starts `/Applications/SABnzbd.app`
+- **Press when online:** opens the SABnzbd web UI
+- Optional actions: pause/resume only, or always open UI
+- Configurable host, API key, poll interval
 
-## Installation (macOS)
+## Requirements
+
+- macOS or Windows with [Ulanzi Studio](https://www.ulanzi.com/pages/ulanzi-app)
+- SABnzbd with API access enabled
+- Node.js 20+ (only to build from source)
+
+## Install (macOS)
 
 ```bash
-./install.sh            # SABnzbd
-./install-opnsense.sh   # OPNsense
+./install.sh
 ```
 
-Danach **Ulanzi Studio neu starten** und die Action auf eine Taste ziehen.
+Then restart **Ulanzi Studio**, drag **Download Status** onto a key, and enter:
 
-Installationspfad:
+- Host URL, e.g. `http://127.0.0.1:8080`
+- API key from SABnzbd → Config → General → Security
 
-`~/Library/Application Support/Ulanzi/UlanziDeck/Plugins/`
+Manual install path:
 
-## Secrets / Config
-
-Jedes Plugin liest optionale Credentials aus `local-config.json` im Plugin-Ordner.
-
-- Vorlage: `local-config.example.json`
-- Echte Datei: `local-config.json` (**nicht committen**, steht in `.gitignore`)
-
-### SABnzbd
-
-```json
-{
-  "host": "http://127.0.0.1:8080",
-  "apikey": "example_sabnzbd_api_key_replace_me"
-}
-```
-
-### OPNsense
-
-```json
-{
-  "host": "https://opnsense.home.arpa",
-  "api_key": "example_opnsense_api_key_replace_me",
-  "api_secret": "example_opnsense_api_secret_replace_me",
-  "interface": "wan",
-  "poll_seconds": "60",
-  "insecure_tls": true
-}
-```
-
-Der OPNsense-API-User braucht Rechte für Diagnostics Traffic / Interface Statistics.
+`~/Library/Application Support/Ulanzi/UlanziDeck/Plugins/com.ulanzi.sabnzbd.ulanziPlugin`
 
 ## Build from source
 
 ```bash
-cd com.ulanzi.sabnzbd.ulanziPlugin   # oder com.ulanzi.opnsense.ulanziPlugin
+cd com.ulanzi.sabnzbd.ulanziPlugin
 npm install
 npm run build
 ```
-
-Node.js 20+ erforderlich.
 
 ## License
 
