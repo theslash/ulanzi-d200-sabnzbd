@@ -1,4 +1,4 @@
 {
-  "apikey": "YOUR_SABNZBD_API_KEY",
-  "host": "http://127.0.0.1:8080"
+  "host": "http://127.0.0.1:8080",
+  "apikey": "example_sabnzbd_api_key_replace_me"
 }

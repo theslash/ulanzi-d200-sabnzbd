@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover" />
+  <title>OPNsense WAN Traffic</title>
+  <link rel="stylesheet" href="../../libs/css/uspi.css">
+  <style>
+    .uspi-item-label { width: 120px; }
+    .hint {
+      opacity: 0.7;
+      font-size: 12px;
+      line-height: 1.35;
+      padding: 0 8px 8px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="udpi-wrapper hidden uspi-wrapper">
+    <form id="property-inspector">
+      <div class="uspi-heading" data-localize>Connection</div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>Host URL</div>
+        <input class="uspi-item-value" type="text" id="host" name="host"
+          value="https://opnsense.home.arpa" placeholder="https://opnsense.home.arpa">
+      </div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>API Key</div>
+        <input class="uspi-item-value" type="password" id="api_key" name="api_key"
+          value="" placeholder="OPNsense API key" autocomplete="off">
+      </div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>API Secret</div>
+        <input class="uspi-item-value" type="password" id="api_secret" name="api_secret"
+          value="" placeholder="OPNsense API secret" autocomplete="off">
+      </div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>Interface</div>
+        <input class="uspi-item-value" type="text" id="interface" name="interface"
+          value="wan" placeholder="wan">
+      </div>
+
+      <div class="uspi-heading" data-localize>Display</div>
+
+      <div class="uspi-item">
+        <div class="uspi-item-label" data-localize>Poll Interval</div>
+        <input class="uspi-item-value max10" type="number" min="5" max="600"
+          id="poll_seconds" name="poll_seconds" value="60">
+        <ud data-localize style="line-height: 26px;">seconds</ud>
+      </div>
+
+      <div class="uspi-item" type="checkbox">
+        <div class="uspi-item-value">
+          <div class="uspi-item-child">
+            <input id="insecure_tls" type="checkbox" name="insecure_tls" checked>
+            <label for="insecure_tls" data-localize>Allow self-signed TLS</label>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint" data-localize>
+        Tip: create API key+secret under System → Access → Users. The user needs privileges for Diagnostics: Traffic / Interface Statistics. Prefer local-config.json for secrets.
+      </p>
+    </form>
+  </div>
+
+  <script src="../../libs/js/constants.js"></script>
+  <script src="../../libs/js/eventEmitter.js"></script>
+  <script src="../../libs/js/timers.js"></script>
+  <script src="../../libs/js/utils.js"></script>
+  <script src="../../libs/js/ulanziApi.js"></script>
+  <script src="./inspector.js"></script>
+</body>
+</html>

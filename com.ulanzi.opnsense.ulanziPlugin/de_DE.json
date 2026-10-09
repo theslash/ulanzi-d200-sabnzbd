@@ -1,0 +1,22 @@
+{
+  "Name": "OPNsense",
+  "Description": "Zeigt OPNsense WAN Up- und Downstream auf dem Ulanzi D200.",
+  "Actions": [
+    {
+      "Name": "WAN Traffic",
+      "Tooltip": "Live OPNsense Up-/Downstream"
+    }
+  ],
+  "Localization": {
+    "Connection": "Verbindung",
+    "Host URL": "Host-URL",
+    "API Key": "API-Key",
+    "API Secret": "API-Secret",
+    "Interface": "Interface",
+    "Display": "Anzeige",
+    "Poll Interval": "Aktualisierung",
+    "seconds": "Sekunden",
+    "Allow self-signed TLS": "Self-Signed-TLS erlauben",
+    "Tip: create API key+secret under System → Access → Users. The user needs privileges for Diagnostics: Traffic / Interface Statistics. Prefer local-config.json for secrets.": "Tipp: API-Key+Secret unter System → Access → Users. Der User braucht Rechte für Diagnostics: Traffic / Interface Statistics. Secrets besser in local-config.json."
+  }
+}

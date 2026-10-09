@@ -4,3 +4,4 @@ sdk/
 *.log
 .env
 *.map
+**/local-config.json

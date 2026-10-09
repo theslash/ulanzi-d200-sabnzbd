@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">
+  <rect width="144" height="144" rx="24" fill="#121926"/>
+  <path d="M72 28 L72 88 M52 70 L72 92 L92 70" stroke="#52C45A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M40 108 H104" stroke="#52C45A" stroke-width="10" stroke-linecap="round"/>
+  <text x="72" y="132" text-anchor="middle" fill="#8BE58F" font-family="Helvetica,Arial,sans-serif" font-size="16" font-weight="700">SAB</text>
+</svg>
